@@ -19,6 +19,7 @@ const DirectorSchema = Schema({
         type: Date,
         default: Date.now
     },
+   
 })
 
 module.exports = model('Director', DirectorSchema);
