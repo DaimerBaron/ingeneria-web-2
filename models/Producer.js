@@ -33,4 +33,4 @@ const ProducerSchema = Schema({
     },
 })
 
-module.exports = model('Producer', ProducerSchema);
+export default model('Producer', ProducerSchema);
