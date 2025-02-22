@@ -25,4 +25,4 @@ const GenreSchema = Schema({
     }
 })
 
-module.exports = model('Genre', GenreSchema);
+export default model('Genre', GenreSchema);

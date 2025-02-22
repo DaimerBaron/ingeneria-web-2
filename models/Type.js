@@ -25,4 +25,4 @@ const TypeSchema = Schema({
     }
 })
 
-modules.exports = model('Type', TypeSchema);
+export default model('Type', TypeSchema);

@@ -10,5 +10,7 @@ const getConnetion = async () => {
     console.log(error);
   }
 
-  module.exports= {getConnetion}
+  
 };
+
+export default getConnetion;

@@ -22,4 +22,4 @@ const DirectorSchema = Schema({
    
 })
 
-module.exports = model('Director', DirectorSchema);
+export default model('Director', DirectorSchema);
