@@ -1,5 +1,6 @@
 import Type from "../models/type.js";
 
+
 class typeController {
   async getAllTypes(req, res) {
     try {
@@ -13,7 +14,7 @@ class typeController {
   async createType(req, res) {
     try {
       const {name,description} = req.body;
-      const newType = new Type({name,state,description});
+      const newType = new Type({name,description});
       await newType.save();
       res.status(200).json(newType);
     } catch (error) {
@@ -39,5 +40,16 @@ class typeController {
   }
 }
 
-
-export default new typeController();
+ export default new typeController();
+// Using ES modules
+// export default {
+//   getAllTypes: (req, res) => {
+//       res.send('Fetching all types');
+//   },
+//   createType: (req, res) => {
+//       res.send('Creating a type');
+//   },
+//   updateType: (req, res) => {
+//       res.send('Updating a type');
+//   }
+// };
