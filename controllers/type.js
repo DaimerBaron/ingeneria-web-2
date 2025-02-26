@@ -3,18 +3,8 @@ import Type from "../models/type.js";
 class typeController {
   async getAllTypes(req, res) {
     try {
-      const types = await type.find();
+      const types = await Type.find();
       res.status(200).json(types);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  }
-
-  async getType(req, res) {
-    const { id } = req.params;
-    try {
-      const type = await Type.findById(id);
-      res.status(200).json(type);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -22,7 +12,7 @@ class typeController {
 
   async createType(req, res) {
     try {
-      const {name,state,description} = req.body;
+      const {name,description} = req.body;
       const newType = new Type({name,state,description});
       await newType.save();
       res.status(200).json(newType);
@@ -37,7 +27,7 @@ class typeController {
     try {
       const updatedType = await Type.findByIdAndUpdate(
         id,
-        { name, state, description, dateUpdated: Date().now },
+        { name, description, dateUpdated: Date().now },
         { new: true }
       );
       if (!updatedType)
