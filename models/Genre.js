@@ -8,8 +8,8 @@ const GenreSchema = Schema({
     state:{
         type: String,
         required: true,
-        enum: ['ACTIVE', 'INACTIVE'],
-        default: 'ACTIVE'
+        enum: ['Active', 'Inactive'],
+        default: 'Active'
     },
     dateCreated:{
         type: Date,

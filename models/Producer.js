@@ -8,8 +8,8 @@ const ProducerSchema = Schema({
     state:{
         type: String,
         required: true,
-        enum: ['ACTIVE', 'INACTIVE'],
-        default: 'ACTIVE'
+        enum: ['Active', 'Inactive'],
+        default: 'Active'
     },
     dateCreated:{
         type: Date,
@@ -19,14 +19,12 @@ const ProducerSchema = Schema({
         type: Date,
         default: Date.now
     },
-    description:{
-        type: String,
-        required: true
-    },
+   
     slogan:{
         type: String,
         required: true
     },
+   
     description:{
         type: String,
         required: true
