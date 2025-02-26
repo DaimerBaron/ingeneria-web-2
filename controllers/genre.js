@@ -10,15 +10,6 @@ class genreController {
     }
   }
 
-  async getGenre(req, res) {
-    const { id } = req.params;
-    try {
-      const genre = await Genre.findById(id);
-      res.status(200).json(genre);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  }
 
   async createGenre(req, res) {
     try {

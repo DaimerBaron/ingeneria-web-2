@@ -1,7 +1,16 @@
 import express from "express";
-import route from express.Router();
+import directorController from "../controllers/director.js";
+import { validationResult,check } from "express-validator";
 
-route.post()
-route.get()
-route.put()
-route.delete()
+
+const route = express.Router();
+
+const validateDirector =[
+    check('name','invalid.name').not().isEmpty(),
+    check('state','invalid.state').isIn(['Active','Inactive'])
+]
+route.post('/', validateDirector,directorController.createDirector)
+route.put('/:id',validateDirector,directorController.updateDirector)
+
+
+export default route;

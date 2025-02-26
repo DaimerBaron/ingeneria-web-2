@@ -9,21 +9,10 @@ class producerController {
       res.status(500).json({ message: error.message });
     }
   }
-
-  async getProducer(req, res) {
-    const { id } = req.params;
-    try {
-      const producer = await Producer.findById(id);
-      res.status(200).json(producer);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  }
-
   async createProducer(req, res) {
     try {
-      const {name,state,description} = req.body;
-      const newProducer= new Producer({name,state,description});
+      const {name,state,slogan,description} = req.body;
+      const newProducer= new Producer({name,state,slogan,description});
       await newProducer.save();
       res.status(200).json(newProducer);
     } catch (error) {
@@ -37,7 +26,7 @@ class producerController {
     try {
       const updatedProducer = await Producer.findByIdAndUpdate(
         id,
-        { name, state, description, dateUpdated: Date().now },
+        { name, state, description, },
         { new: true }
       );
       if (!updatedProducer)
