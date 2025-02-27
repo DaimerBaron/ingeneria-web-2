@@ -24,7 +24,7 @@ class typeController {
   async updateType(req, res) {
     const { id } = req.params;
     const type = req.body;
-    const { name, state, description } = type;
+    const { name,description } = type;
     try {
       const updatedType = await Type.findByIdAndUpdate(
         id,

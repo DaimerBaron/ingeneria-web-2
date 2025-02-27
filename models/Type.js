@@ -5,12 +5,6 @@ const TypeSchema = Schema({
         type: String,
         required: true
     },
-    state:{
-        type: String,
-        required: true,
-        enum: ['ACTIVE', 'INACTIVE'],
-        default: 'ACTIVE'
-    },
     dateCreated:{
         type: Date,
         default: Date.now
