@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 const MediaSchema = Schema({
   serial: {
-    type: String,
+    type: Number,
     required: true,
     unique: true,
   },
