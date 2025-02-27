@@ -19,12 +19,20 @@ const validateMedia=[
         check('director', 'invalid.director').not().isEmpty(),
         check('producer', 'invalid.producer').not().isEmpty(),
         check('type', 'invalid.tye').not().isEmpty(),
-    ]
+        function (req, res, next) {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+              return res.status(400).json({ message: errors.array() });
+            }
+            next();
+          },
+        ];
+    
 
 router.get('/',MediaController.getMedia);
 router.get('/:id',MediaController.getOneMedia)
-router.post('/',MediaController.createMedia);
-router.put('/:id',MediaController.updateMedia);
+router.post('/',validateMedia,MediaController.createMedia);
+router.put('/:id',validateMedia,MediaController.updateMedia);
 router.delete('/:id',MediaController.deleteMedia);
 
 
