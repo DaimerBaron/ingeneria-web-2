@@ -22,8 +22,8 @@ class typeController {
 
   async createType(req, res) {
     try {
-      const {name,state,description} = req.body;
-      const newType = new Type({name,state,description});
+      const {name,description} = req.body;
+      const newType = new Type({name,description});
       await newType.save();
       res.status(200).json(newType);
     } catch (error) {
@@ -33,11 +33,11 @@ class typeController {
   async updateType(req, res) {
     const { id } = req.params;
     const type = req.body;
-    const { name, state, description } = type;
+    const { name,description } = type;
     try {
       const updatedType = await Type.findByIdAndUpdate(
         id,
-        { name, state, description, dateUpdated: Date().now },
+        { name, description, dateUpdated: Date().now },
         { new: true }
       );
       if (!updatedType)
