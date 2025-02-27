@@ -25,7 +25,6 @@ class MediaController {
 
     async createMedia(req, res) {
         try {
-            const { serial, title, synopsis } = req.body;
             const newMedia = new Media({ ...req.body });
       
             await newMedia.save();

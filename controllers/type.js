@@ -1,20 +1,11 @@
 import Type from "../models/type.js";
 
+
 class typeController {
   async getAllTypes(req, res) {
     try {
-      const types = await type.find();
+      const types = await Type.find();
       res.status(200).json(types);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  }
-
-  async getType(req, res) {
-    const { id } = req.params;
-    try {
-      const type = await Type.findById(id);
-      res.status(200).json(type);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -49,5 +40,16 @@ class typeController {
   }
 }
 
-
-export default new typeController();
+ export default new typeController();
+// Using ES modules
+// export default {
+//   getAllTypes: (req, res) => {
+//       res.send('Fetching all types');
+//   },
+//   createType: (req, res) => {
+//       res.send('Creating a type');
+//   },
+//   updateType: (req, res) => {
+//       res.send('Updating a type');
+//   }
+// };
