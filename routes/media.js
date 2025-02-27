@@ -1,5 +1,6 @@
 import express from "express";
 import MediaController from "../controllers/media.js";
+import { check } from "express-validator";
 
 const router = express.Router();
 

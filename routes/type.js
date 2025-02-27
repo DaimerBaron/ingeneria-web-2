@@ -22,4 +22,4 @@ router.get('/', TypeController.getAllTypes);
 router.post('/',validateType, TypeController.createType);
 router.put('/:id',validateType, TypeController.updateType);
 
-export default route;
+export default router;
