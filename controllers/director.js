@@ -9,15 +9,6 @@ class directorController {
       res.status(500).json({ message: error.message });
     }
   }
- async getdirector(req, res) {
-    const { id } = req.params;
-    try {
-      const director = await Director.findById(id);
-      res.status(200).json(director);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  }
 
   async createDirector(req, res) {
     try {

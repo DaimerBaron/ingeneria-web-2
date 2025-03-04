@@ -35,7 +35,7 @@ const MediaSchema = Schema({
     type: Number,
     required: true,
   },
-  MainGenre:{
+  Genre:{
     type: Schema.Types.ObjectId,
     ref: 'Genre',
     required: true,

@@ -4,7 +4,7 @@ class producerController {
   async getAllProducers(req, res) {
     try {
       const producers = await Producer.find();
-      res.status(200).json(producer);
+      res.status(200).json(producers);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

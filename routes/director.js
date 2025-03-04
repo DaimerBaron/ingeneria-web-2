@@ -11,6 +11,6 @@ const validateDirector =[
 ]
 route.post('/', validateDirector,directorController.createDirector)
 route.put('/:id',validateDirector,directorController.updateDirector)
-
+route.get('/',directorController.getAllDirectors)
 
 export default route;
