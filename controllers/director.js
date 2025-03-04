@@ -4,15 +4,15 @@ class directorController {
   async getAllDirectors(req, res) {
     try {
       const director = await Director.find();
-      res.status(200).json(director);s
+      res.status(200).json(director);
     } catch (error) {
-      res.status(500).json({ message: error.message }); 
+      res.status(500).json({ message: error.message });
+    }
   }
-}
   async createDirector(req, res) {
     try {
-      const {name,state,description} = req.body;
-      const newDirector = new Director({name,state,description});
+      const { name, state, description } = req.body;
+      const newDirector = new Director({ name, state, description });
       await newDirector.save();
       res.status(200).json(newDirector);
     } catch (error) {
@@ -37,6 +37,5 @@ class directorController {
     }
   }
 }
-
 
 export default new directorController();

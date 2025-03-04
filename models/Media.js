@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 const MediaSchema = Schema({
   serial: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
   },
@@ -31,11 +31,11 @@ const MediaSchema = Schema({
     type: Date,
     default: Date.now
   },
-  ReleaseYear:{
+  releaseYear:{
     type: Number,
     required: true,
   },
-  MainGenre:{
+  Genre:{
     type: Schema.Types.ObjectId,
     ref: 'Genre',
     required: true,
