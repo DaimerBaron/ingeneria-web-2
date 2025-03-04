@@ -31,7 +31,7 @@ const MediaSchema = Schema({
     type: Date,
     default: Date.now
   },
-  ReleaseYear:{
+  releaseYear:{
     type: Number,
     required: true,
   },

@@ -4,10 +4,10 @@ class MediaController {
   async getMedia(req, res) {
     try {
       const media = await Media.find()
-        .populate("Genre", 'name')
-        .populate("Type", 'name')
-        .populate("Director", 'name')
-        .populate("Producer", 'name');
+        .populate("Genre", "name")
+        .populate("Type", "name")
+        .populate("Director", "name")
+        .populate("Producer", "name");
       res.status(200).json(media);
     } catch (error) {
       res.status(500).send(error);
@@ -18,13 +18,7 @@ class MediaController {
     try {
       const newMedia = new Media({ ...req.body });
       await newMedia.save();
-      const populatedMedia = await Media.populate(newMedia, [
-        { path: "Genre", select: "name" },
-        { path: "Director", select: "name" },
-        { path: "Producer", select: "name" },
-        { path: "Type", select: "name" },
-      ]);
-      res.status(200).json(populatedMedia);
+      res.status(200).json(newMedia);
     } catch (error) {
       res.status(500).send(error);
     }
@@ -37,10 +31,10 @@ class MediaController {
         { ...req.body },
         { new: true }
       )
-        .populate("Genre", 'name')
-        .populate("Type", 'name')
-        .populate("Director", 'name')
-        .populate("Producer", 'name');
+        .populate("Genre", "name")
+        .populate("Type", "name")
+        .populate("Director", "name")
+        .populate("Producer", "name");
       if (!updatedMedia) {
         return res.status(404).send("Media not found");
       }
@@ -51,9 +45,9 @@ class MediaController {
   }
   async deleteMedia(req, res) {
     const { id } = req.params;
-    const media = await Media.findByIdAndDelete(id);
+    await Media.findByIdAndDelete(id);
     try {
-      res.status(201).json(media);
+      res.status(200).json({ message: "Media deleted" });
     } catch (error) {
       res.status(500).send(error);
     }

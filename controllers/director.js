@@ -3,17 +3,16 @@ import Director from "../models/Director.js";
 class directorController {
   async getAllDirectors(req, res) {
     try {
-      const genres = await Director.find();
-      res.status(200).json(Director);
+      const director = await Director.find();
+      res.status(200).json(director);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   }
-
   async createDirector(req, res) {
     try {
-      const {name,state,description} = req.body;
-      const newDirector = new Director({name,state,description});
+      const { name, state, description } = req.body;
+      const newDirector = new Director({ name, state, description });
       await newDirector.save();
       res.status(200).json(newDirector);
     } catch (error) {
@@ -22,12 +21,12 @@ class directorController {
   }
   async updateDirector(req, res) {
     const { id } = req.params;
-    const genre = req.body;
-    const { name, state, description } = director;
+    const director = req.body;
+    const { name, state } = director;
     try {
       const updatedDirector = await Director.findByIdAndUpdate(
         id,
-        { name, state, description, dateUpdated: Date().now },
+        { name, state, dateUpdated: Date().now },
         { new: true }
       );
       if (!updatedDirector)
@@ -38,6 +37,5 @@ class directorController {
     }
   }
 }
-
 
 export default new directorController();

@@ -10,11 +10,10 @@ class genreController {
     }
   }
 
-
   async createGenre(req, res) {
     try {
-      const {name,state,description} = req.body;
-      const newGenre = new Genre({name,state,description});
+      const { name, state, description } = req.body;
+      const newGenre = new Genre({ name, state, description });
       await newGenre.save();
       res.status(200).json(newGenre);
     } catch (error) {
@@ -39,6 +38,5 @@ class genreController {
     }
   }
 }
-
 
 export default new genreController();
