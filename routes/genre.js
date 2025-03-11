@@ -19,5 +19,6 @@ const router = express.Router();
 router.get("/", genreController.getAllGenres);
 router.post("/", validateGenre, genreController.createGenre);
 router.put("/:id", validateGenre, genreController.updateGenre);
+router.delete("/:id", genreController.deleteGenre);
 
 export default router;
