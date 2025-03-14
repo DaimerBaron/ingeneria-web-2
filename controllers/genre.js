@@ -37,6 +37,17 @@ class genreController {
       res.status(500).json({ message: error.message });
     }
   }
+  async deleteGenre(req, res) {
+    const { id } = req.params;
+    try {
+      const deletedGenre = await Genre.findByIdAndDelete(id);
+      if (!deletedGenre)
+        return res.status(404).json({ message: "Genre not found" });
+      res.status(204).json({ message: "Genre deleted" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
 }
 
 export default new genreController();

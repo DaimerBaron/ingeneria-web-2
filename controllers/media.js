@@ -1,4 +1,5 @@
 import Media from "../models/Media.js";
+import crypto from "crypto";
 
 class MediaController {
   async getMedia(req, res) {
@@ -16,7 +17,8 @@ class MediaController {
 
   async createMedia(req, res) {
     try {
-      const newMedia = new Media({ ...req.body });
+      const serial = crypto.randomUUID();
+      const newMedia = new Media({ ...req.body,serial });
       await newMedia.save();
       res.status(200).json(newMedia);
     } catch (error) {
