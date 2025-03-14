@@ -11,9 +11,9 @@ import { typeList } from "../api/type";
 
 const NewMedia = () => {
   const { register, handleSubmit } = useForm();
-  const [list, setlist] = useState([
+  const [list, setlist] = useState(
     { genre: [], producer: [], director: [], type: [] },
-  ]);
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +34,7 @@ const NewMedia = () => {
       });
     };
     fetchData();
-    
+ 
     
   }, []);
   
