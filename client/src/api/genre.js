@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "axios"; // peticiones al igual que fetch
 
 
 const API = 'http://localhost:5100/';
