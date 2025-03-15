@@ -39,12 +39,17 @@ const Producer = () => {
 
   const producerDeleteById = async (id) => {
     try {
-      await producerDelete(id);
-      getProducers();
+      const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este tipo?");
+      if (!confirmDelete) return; // Si el usuario cancela, no hace nada
+  
+      await typeDelete(id);
+      setTypes(types.filter((type) => type._id !== id)); // Elimina del estado sin recargar
     } catch (error) {
-      console.error("Error deleting producer:", error);
+      console.error("Error eliminando el tipo:", error.response?.data || error.message);
+      alert("No se pudo eliminar el tipo.");
     }
   };
+
 
   const startEditing = (producer) => {
     setEditingProducer(producer);
