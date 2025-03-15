@@ -1,78 +1,94 @@
-import { useForm } from "react-hook-form"; //hook con metodos
-import { directorRequest, directorList,directorDelete } from "../api/director";
+import { useForm } from "react-hook-form";
+import { directorRequest, directorList, directorDelete, directorUpdate } from "../api/director";
 import { useEffect, useState } from "react";
-
 import TrashIcon from "../assets/trash.svg?react";
 
-const director = () => {
-  const [directors, setdirectors] = useState([]); //estados de react para en este caso guardar
-  const { register, handleSubmit, reset } = useForm(); //llamo las funciones, register hadlesubmit lo igualo en la 19, 
-  const getdirectors = async () => { 
+const Director = () => {
+  const [directors, setDirectors] = useState([]);
+  const [editingDirector, setEditingDirector] = useState(null); // Estado para edición
+
+  const { register, handleSubmit, reset, setValue } = useForm(); // Agregué setValue para edición
+
+  const getDirectors = async () => {
     const res = await directorList();
-    console.log (res)
-    setdirectors(res.data);
+    setDirectors(res.data);
   };
 
   useEffect(() => {
-    getdirectors();
+    getDirectors();
   }, []);
 
-  const onsubmit = handleSubmit(async (data) => { //se iguala el handle, recibe unos datos. esto es lo que guarda en register 
-    console.log (data)
-    await directorRequest(data); // es la conexion a la api 
-    getdirectors();
+  const onSubmit = handleSubmit(async (data) => {
+    if (editingDirector) {
+      await directorUpdate(editingDirector._id, data); // Si hay edición, actualiza
+      setEditingDirector(null);
+    } else {
+      await directorRequest(data); // Si no, crea un nuevo director
+    }
+    getDirectors();
     reset();
   });
 
   const directorDeleteById = async (id) => {
     await directorDelete(id);
-    getdirectors();
-  }
+    getDirectors();
+  };
+
+  const startEditing = (director) => {
+    setEditingDirector(director);
+    setValue("name", director.name);
+    setValue("state", director.state);
+  };
+
   return (
     <div className="flex flex-col p-10">
-      <div className=" rounded-3xl flex flex-col items-center justify-center ">
-        <h1 className="text-2xl font-bold mb-3">Lista de Directores</h1>
+      <div className="rounded-3xl flex flex-col items-center justify-center">
+        <h1 className="text-2xl font-bold mb-3">
+          {editingDirector ? "Edit Director" : "Lista de Directores"}
+        </h1>
         <form
-          className="bg-zinc-300 flex  gap-2 justify-center items-center m-auto py-2 px-4 w-full rounded-md"
-          onSubmit={onsubmit} //este atributo es para hacer envio es muy parecido a una funcion
+          className="bg-zinc-300 flex gap-2 justify-center items-center m-auto py-2 px-4 w-full rounded-md"
+          onSubmit={onSubmit}
         >
           <input
-            className=" outline-none rounded-md p-1"
+            className="outline-none rounded-md p-1"
             type="text"
             placeholder="Name"
-            {...register("name", { required: true })} //register para traer todo y registrar, ayuda a guardar lo que escribo simepre poner el mismo nombre del imput
+            {...register("name", { required: true })}
           />
           <select
             className="w-full p-1 rounded-md outline-none max-w-24"
-            defaultValue="Active"
             {...register("state")}
           >
             <option value="Active">Active</option>
             <option value="Inactive">Inactive</option>
           </select>
 
-          <button
-            type="submit"
-            className="bg-black text-white py-1 border-none px-4 rounded-md "
-          >
-            Add
+          <button type="submit" className="bg-black text-white py-1 px-4 rounded-md">
+            {editingDirector ? "Update" : "Add"}
           </button>
         </form>
       </div>
+
       <table className="w-full border-collapse mt-5">
         <thead>
           <tr>
             <th>Name</th>
             <th>State</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {directors.map((director) => (
-            <tr className="border" key={director._id}> 
+            <tr className="border" key={director._id}>
               <td className="border pl-2">{director.name}</td>
               <td className="border pl-2 text-center w-20">{director.state}</td>
-              <td className="border pl-2 text-center cursor-pointer">
-                <TrashIcon onClick={()=>directorDeleteById(director._id)}  className="w-4 h-4 text-red-500 "></TrashIcon>
+              <td className="border pl-2 text-center cursor-pointer flex justify-center gap-2">
+                <button onClick={() => startEditing(director)} className="text-blue-500">Edit</button>
+                <TrashIcon
+                  onClick={() => directorDeleteById(director._id)}
+                  className="w-4 h-4 text-red-500"
+                />
               </td>
             </tr>
           ))}
@@ -82,4 +98,4 @@ const director = () => {
   );
 };
 
-export default director;
+export default Director;
