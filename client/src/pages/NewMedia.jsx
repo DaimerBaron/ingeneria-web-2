@@ -54,7 +54,7 @@ const NewMedia = () => {
   });
 
   return (
-    <div className="flex justify-center absolute inset-0 overflow-hidden bg-primary-default text-slate-200">
+    <div className="flex flex-1 justify-center text-slate-200">
       <div className="bg-primary-light  p-4 flex flex-col items-center m-auto rounded-lg px-8">
         <h1 className="font-bold text-2xl mb-5">Create Media</h1>
         <form onSubmit={onsubmit} className="flex flex-col  gap-2">
