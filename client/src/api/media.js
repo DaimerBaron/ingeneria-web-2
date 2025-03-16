@@ -1,5 +1,8 @@
 import axios from "axios";
 
-const API = 'http://localhost:5100/';
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:5100/",
+});
 
-export const mediaRequest = async (media) => await axios.post(`${API}media`, media);
+export const mediaRequest = async (media) => await axiosInstance.post("media", media);
+export const mediaList = async () => await axiosInstance.get("media");

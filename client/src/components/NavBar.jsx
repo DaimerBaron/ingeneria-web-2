@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <nav className="bg-green-900 p-4 z-10 absolute w-full text-white">
+    <nav className="bg-green-900 p-4  w-full text-white">
       <ul className="flex space-x-4">
         <li>
           <Link to="/" className="hover:text-green-300">
@@ -14,11 +14,7 @@ const Navbar = () => {
             Create Media
           </Link>
         </li>
-        <li>
-          <Link to="/updateMedia" className="hover:text-green-300">
-            Update Media
-          </Link>
-        </li>
+        
         <li>
           <Link to="/director" className="hover:text-green-300">
             Director
