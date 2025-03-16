@@ -9,11 +9,16 @@ import { producerList } from "../api/producer";
 import { directorList } from "../api/director";
 import { typeList } from "../api/type";
 
+import { Toaster, toast } from "sonner";
+
 const NewMedia = () => {
-  const { register, handleSubmit } = useForm();
-  const [list, setlist] = useState(
-    { genre: [], producer: [], director: [], type: [] },
-  );
+  const { register, handleSubmit, reset } = useForm();
+  const [list, setlist] = useState({
+    genre: [],
+    producer: [],
+    director: [],
+    type: [],
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,8 +29,6 @@ const NewMedia = () => {
         typeList(),
       ]);
 
-
-
       setlist({
         genre: genre.data,
         producer: producer.data,
@@ -34,18 +37,20 @@ const NewMedia = () => {
       });
     };
     fetchData();
- 
-    
   }, []);
-  
 
   const onsubmit = handleSubmit(async (data) => {
-    console.log(data);
-
-    console.log(list);
-    
-   await mediaRequest(data);
-    
+    try {
+      toast.promise(mediaRequest(data), {
+        loading: "Creating media...",
+        success: () => {
+          reset();
+          return "Media created";
+        },
+      });
+    } catch (error) {
+      toast.error("Failed to create media. Please try again");
+    }
   });
 
   return (
@@ -58,6 +63,7 @@ const NewMedia = () => {
               <label className="flex gap-1">
                 <span className="w-28">Title:</span>
                 <input
+                  required
                   className="w-full pl-2 outline-none rounded-md  bg-primary-default  py-1"
                   type="text"
                   name="title"
@@ -67,6 +73,7 @@ const NewMedia = () => {
               <label className="flex gap-1 items-center">
                 <span className="w-28">Synopsis:</span>
                 <textarea
+                  required
                   className="w-full py-4  bg-primary-default pl-2 outline-none rounded-md resize-none"
                   type="text"
                   name="synopsis"
@@ -76,6 +83,7 @@ const NewMedia = () => {
               <label className="flex gap-1  ">
                 <span className="w-28">Photo:</span>
                 <input
+                  required
                   className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
                   type="text"
                   name="photo"
@@ -86,6 +94,7 @@ const NewMedia = () => {
               <label className="flex gap-1">
                 <span className="w-28">Year:</span>
                 <input
+                  required
                   className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
                   type="number"
                   name="releaseYear"
@@ -98,6 +107,7 @@ const NewMedia = () => {
               <label className="flex gap-1 items-center">
                 <span className="w-28">Genre:</span>
                 <select
+                  required
                   className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
                   {...register("Genre", { required: true })}
                 >
@@ -113,6 +123,7 @@ const NewMedia = () => {
                 <span className="w-28">Producer:</span>
 
                 <select
+                  required
                   className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
                   {...register("Producer", { required: true })}
                 >
@@ -128,6 +139,7 @@ const NewMedia = () => {
                 <span className="w-28">Director:</span>
 
                 <select
+                  required
                   className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
                   {...register("Director", { required: true })}
                 >
@@ -143,6 +155,7 @@ const NewMedia = () => {
                 <span className="w-28">Type:</span>
 
                 <select
+                  required
                   className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
                   {...register("Type", { required: true })}
                 >
@@ -163,6 +176,7 @@ const NewMedia = () => {
           >
             Create
           </button>
+          <Toaster richColors />
         </form>
       </div>
     </div>
