@@ -39,17 +39,16 @@ const Producer = () => {
 
   const producerDeleteById = async (id) => {
     try {
-      const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este tipo?");
-      if (!confirmDelete) return; // Si el usuario cancela, no hace nada
-  
-      await typeDelete(id);
-      setTypes(types.filter((type) => type._id !== id)); // Elimina del estado sin recargar
+      const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este productor?");
+      if (!confirmDelete) return;
+
+      await producerDelete(id);
+      setProducers(producers.filter((producer) => producer._id !== id)); // Corrige el estado después de eliminar
     } catch (error) {
-      console.error("Error eliminando el tipo:", error.response?.data || error.message);
-      alert("No se pudo eliminar el tipo.");
+      console.error("Error eliminando el productor:", error.response?.data || error.message);
+      alert("No se pudo eliminar el productor.");
     }
   };
-
 
   const startEditing = (producer) => {
     setEditingProducer(producer);
