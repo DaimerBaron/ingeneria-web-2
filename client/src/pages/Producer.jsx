@@ -1,8 +1,13 @@
 import { useForm } from "react-hook-form";
-import { producerRequest, producerList, producerDelete, producerUpdate } from "../api/producer";
+import {
+  producerRequest,
+  producerList,
+  producerDelete,
+  producerUpdate,
+} from "../api/producer";
 import { useEffect, useState } from "react";
-import TrashIcon from "../assets/trash.svg?react";
-
+import { FaEdit } from "react-icons/fa";
+import { FaTrashCan } from "react-icons/fa6";
 const Producer = () => {
   const [producers, setProducers] = useState([]);
   const [editingProducer, setEditingProducer] = useState(null);
@@ -39,13 +44,18 @@ const Producer = () => {
 
   const producerDeleteById = async (id) => {
     try {
-      const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este productor?");
+      const confirmDelete = window.confirm(
+        "¿Estás seguro de que deseas eliminar este productor?"
+      );
       if (!confirmDelete) return;
 
       await producerDelete(id);
       setProducers(producers.filter((producer) => producer._id !== id)); // Corrige el estado después de eliminar
     } catch (error) {
-      console.error("Error eliminando el productor:", error.response?.data || error.message);
+      console.error(
+        "Error eliminando el productor:",
+        error.response?.data || error.message
+      );
       alert("No se pudo eliminar el productor.");
     }
   };
@@ -65,7 +75,7 @@ const Producer = () => {
           {editingProducer ? "Edit Producer" : "Lista de productores"}
         </h1>
         <form
-          className="bg-zinc-300 flex gap-2 justify-center items-center m-auto py-2 px-4 w-full rounded-md"
+          className="bg-zinc-300 flex gap-2 justify-center items-center m-auto py-2 px-4 w-full rounded-md text-black"
           onSubmit={onSubmit}
         >
           <input
@@ -95,7 +105,10 @@ const Producer = () => {
             {...register("description", { required: true })}
           />
 
-          <button type="submit" className="bg-black text-white py-1 px-4 rounded-md">
+          <button
+            type="submit"
+            className="bg-black text-white py-1 px-4 rounded-md"
+          >
             {editingProducer ? "Update" : "Add"}
           </button>
         </form>
@@ -103,7 +116,7 @@ const Producer = () => {
 
       <table className="w-full border-collapse mt-5">
         <thead>
-          <tr className="bg-gray-200">
+          <tr className="bg-gray-400 text-black">
             <th className="border px-2 py-1 text-center">Name</th>
             <th className="border px-2 py-1 text-center">State</th>
             <th className="border px-2 py-1 text-center">Slogan</th>
@@ -118,11 +131,15 @@ const Producer = () => {
               <td className="border px-2 text-center">{producer.state}</td>
               <td className="border px-2">{producer.slogan}</td>
               <td className="border px-2">{producer.description}</td>
-              <td className="border px-2 text-center flex justify-center gap-2">
-                <button onClick={() => startEditing(producer)} className="text-blue-500">Edit</button>
-                <TrashIcon
+             
+              <td className="text-center cursor-pointer  gap-1 flex justify-around items-center px-3 py-3 ">
+                <FaEdit
+                  onClick={() => startEditing(producer)}
+                  className="text-blue-500 "
+                ></FaEdit>
+                <FaTrashCan
                   onClick={() => producerDeleteById(producer._id)}
-                  className="w-4 h-4 text-red-500 cursor-pointer"
+                  className="w-4 h-4 text-red-500"
                 />
               </td>
             </tr>

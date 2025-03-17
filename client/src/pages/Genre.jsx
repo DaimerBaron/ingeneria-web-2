@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form"; //hook con metodos
 import { genreRequest, genreList,genreDelete } from "../api/genre";
 import { useEffect, useState } from "react";
 
-import TrashIcon from "../assets/trash.svg?react";
+import { FaEdit } from "react-icons/fa";
+import { FaTrashCan } from "react-icons/fa6";
 
 const Genre = () => {
   const [genres, setGenres] = useState([]); //estados de react para en este caso guardar
@@ -33,7 +34,7 @@ const Genre = () => {
       <div className=" rounded-3xl flex flex-col items-center justify-center ">
         <h1 className="text-2xl font-bold mb-3">Lista de géneros</h1>
         <form
-          className="bg-zinc-300 flex  gap-2 justify-center items-center m-auto py-2 px-4 w-full rounded-md"
+          className="bg-zinc-300 flex  gap-2 justify-center items-center m-auto py-2 px-4 w-full rounded-md text-black"
           onSubmit={onsubmit} //este atributo es para hacer envio es muy parecido a una funcion
         >
           <input
@@ -80,8 +81,9 @@ const Genre = () => {
               <td className="border pl-2">{genre.name}</td>
               <td className="border pl-2">{genre.description}</td>
               <td className="border pl-2 text-center w-20">{genre.state}</td>
-              <td className="border pl-2 text-center cursor-pointer">
-                <TrashIcon onClick={()=>genreDeleteById(genre._id)}  className="w-4 h-4 text-red-500 "></TrashIcon>
+              <td className="text-center cursor-pointer  gap-1 flex justify-around items-center px-3 py-3 ">
+                <FaEdit className="w-4 h-4 text-blue-500"></FaEdit>
+                <FaTrashCan onClick={()=>genreDeleteById(genre._id)}  className="w-4 h-4 text-red-500 "></FaTrashCan>
               </td>
             </tr>
           ))}
