@@ -41,7 +41,7 @@ const Director = () => {
   };
 
   return (
-    <div className="flex flex-col p-10">
+    <div className="flex flex-col p-10 overflow-y-auto">
       <div className="rounded-3xl flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold mb-3">
           {editingDirector ? "Edit Director" : "Lista de Directores"}

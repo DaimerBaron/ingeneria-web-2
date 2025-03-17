@@ -23,7 +23,12 @@ const Type = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     if (editingType) {
-      await typeUpdate(editingType._id, data); // Si hay edición, actualiza
+      toast.promise(typeUpdate(editingType._id, data), {
+        success: "Type updated",
+        loading: "Updating...",
+        error: "Error updating type",
+      });
+
       setEditingType(null);
     } else {
       await typeRequest(data); // Si no, crea un nuevo type
@@ -32,29 +37,35 @@ const Type = () => {
     reset();
   });
 
-  const typeDeleteById = async (id) => {
-    try {
-      await typeDelete(id);
-      setTypes(types.filter((type) => type._id !== id)); // Elimina del estado sin recargar
-      toast.dismiss();
-     
-    } catch (error) {
-      console.log(error);
-      toast.dismiss();
-    }
+  const typeDeleteById = async (id, toastId) => {
+    toast.promise(
+      (async () => {
+        await typeDelete(id); // Llamada a la API
+        setTypes((prevTypes) => prevTypes.filter((type) => type._id !== id));
+        toast.dismiss(toastId); // Cierra la ventana de confirmación
+      })(),
+      {
+        success: "Type deleted successfully!",
+        loading: "Deleting...",
+        error: "Error deleting type",
+      }
+    );
   };
+
   const handleDelete = (id) => {
-    toast.custom((t) => (
-      <ConfirmToast
-        id={id}
-        onConfirm={typeDeleteById}
-        onCancel={toast.dismiss}
-        toastId={t}
-      />
-    ),{
-      position: "bottom-right",
-      
-    });
+    toast.custom(
+      (t) => (
+        <ConfirmToast
+          id={id}
+          onConfirm={typeDeleteById}
+          onCancel={toast.dismiss}
+          toastId={t}
+        />
+      ),
+      {
+        position: "bottom-right",
+      }
+    );
   };
   const startEditing = (type) => {
     setEditingType(type);
@@ -63,8 +74,8 @@ const Type = () => {
   };
 
   return (
-    <div className="flex flex-col p-10 relative overflow-y-scroll">
-      <Toaster  />
+    <div className="flex flex-col p-10 relative overflow-y-auto">
+      <Toaster richColors />
 
       <div className="rounded-3xl flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold mb-3">
@@ -75,6 +86,7 @@ const Type = () => {
           onSubmit={onSubmit}
         >
           <input
+          autoFocus={true}
             className="outline-none rounded-md p-1"
             type="text"
             placeholder="Name"

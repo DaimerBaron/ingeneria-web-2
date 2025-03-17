@@ -30,7 +30,7 @@ const Genre = () => {
     getGenres();
   }
   return (
-    <div className="flex flex-1 flex-col p-10 mt-2">
+    <div className="flex flex-1 flex-col p-10 mt-2 overflow-y-auto">
       <div className=" rounded-3xl flex flex-col items-center justify-center ">
         <h1 className="text-2xl font-bold mb-3">Lista de géneros</h1>
         <form

@@ -10,7 +10,7 @@ const ConfirmToast = ({ id, onConfirm, onCancel, toastId }) => {
       <div className="flex w-full justify-center items-center gap-3 mt-4">
         <button
           
-          onClick={() => onConfirm(id)}
+          onClick={() => onConfirm(id,toastId)}
           className="bg-red-500 text-white px-4 py-1 rounded-md hover:bg-red-600 transition"
         >
           Eliminar
