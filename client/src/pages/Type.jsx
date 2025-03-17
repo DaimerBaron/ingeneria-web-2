@@ -5,12 +5,13 @@ import { FaEdit } from "react-icons/fa";
 import { FaTrashCan } from "react-icons/fa6";
 import { toast, Toaster } from "sonner";
 import ConfirmToast from "../components/ConfirmToast";
+import FormToCreate from "../components/FormToCreate";
 
 const Type = () => {
   const [types, setTypes] = useState([]);
   const [editingType, setEditingType] = useState(null); // Estado para edición
 
-  const { register, handleSubmit, reset, setValue } = useForm(); // Agregué setValue para edición
+
 
   const getTypes = async () => {
     const res = await typeList();
@@ -21,7 +22,9 @@ const Type = () => {
     getTypes();
   }, []);
 
-  const onSubmit = handleSubmit(async (data) => {
+  
+
+  const sendData = async (data) => {
     if (editingType) {
       toast.promise(typeUpdate(editingType._id, data), {
         success: "Type updated",
@@ -34,8 +37,8 @@ const Type = () => {
       await typeRequest(data); // Si no, crea un nuevo type
     }
     getTypes();
-    reset();
-  });
+   
+  }
 
   const typeDeleteById = async (id, toastId) => {
     toast.promise(
@@ -67,45 +70,21 @@ const Type = () => {
       }
     );
   };
-  const startEditing = (type) => {
-    setEditingType(type);
-    setValue("name", type.name);
-    setValue("description", type.description);
-  };
-
+ 
+  const formInputs =[
+    {name:"name", placeholder:"Name"},
+    {name:"description", placeholder:"Description"}
+  ]
   return (
     <div className="flex flex-col p-10 relative overflow-y-auto">
       <Toaster richColors />
 
-      <div className="rounded-3xl flex flex-col items-center justify-center">
-        <h1 className="text-2xl font-bold mb-3">
-          {editingType ? "Edit Type" : "Lista de Tipos de media"}
-        </h1>
-        <form
-          className="bg-zinc-300 flex gap-2 justify-center items-center m-auto py-2 px-4 w-full rounded-md text-black"
-          onSubmit={onSubmit}
-        >
-          <input
-          autoFocus={true}
-            className="outline-none rounded-md p-1"
-            type="text"
-            placeholder="Name"
-            {...register("name", { required: true })}
-          />
-          <input
-            className="outline-none rounded-md p-1"
-            type="text"
-            placeholder="Description"
-            {...register("description", { required: true })}
-          />
-          <button
-            type="submit"
-            className="bg-black text-white py-1 px-4 rounded-md"
-          >
-            {editingType ? "Update" : "Add"}
-          </button>
-        </form>
-      </div>
+    <FormToCreate
+      isEditing={editingType}
+      formInputs={formInputs}
+      sendData={sendData}
+      
+    />
 
       <table className="w-full border-collapse mt-5 select-none">
         <thead>
@@ -123,7 +102,7 @@ const Type = () => {
 
               <td className="text-center cursor-pointer  gap-1 flex justify-around items-center px-3 py-3 ">
                 <FaEdit
-                  onClick={() => startEditing(type)}
+                  onClick={() => setEditingType(type)}
                   className="text-blue-500 "
                 ></FaEdit>
                 <FaTrashCan

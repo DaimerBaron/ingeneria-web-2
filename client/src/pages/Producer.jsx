@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaTrashCan } from "react-icons/fa6";
 import FormToCreate from "../components/FormToCreate";
-import producer from "../../../controllers/producer";
 
 const Producer = () => {
   const [producers, setProducers] = useState([]);
@@ -72,7 +71,7 @@ const Producer = () => {
           { name: "slogan", placeholder: "Slogan" },
           { name: "description", placeholder: "Description" },
         ]}
-        editValues={producer}
+        
       />
 
       <table className="w-full border-collapse mt-5">
