@@ -3,6 +3,8 @@ import { typeRequest, typeList, typeDelete, typeUpdate } from "../api/type";
 import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaTrashCan } from "react-icons/fa6";
+import { toast, Toaster } from "sonner";
+import ConfirmToast from "../components/ConfirmToast";
 
 const Type = () => {
   const [types, setTypes] = useState([]);
@@ -32,22 +34,28 @@ const Type = () => {
 
   const typeDeleteById = async (id) => {
     try {
-      const confirmDelete = window.confirm(
-        "¿Estás seguro de que deseas eliminar este tipo?"
-      );
-      if (!confirmDelete) return; // Si el usuario cancela, no hace nada
-
       await typeDelete(id);
       setTypes(types.filter((type) => type._id !== id)); // Elimina del estado sin recargar
+      toast.dismiss();
+     
     } catch (error) {
-      console.error(
-        "Error eliminando el tipo:",
-        error.response?.data || error.message
-      );
-      alert("No se pudo eliminar el tipo.");
+      console.log(error);
+      toast.dismiss();
     }
   };
-
+  const handleDelete = (id) => {
+    toast.custom((t) => (
+      <ConfirmToast
+        id={id}
+        onConfirm={typeDeleteById}
+        onCancel={toast.dismiss}
+        toastId={t}
+      />
+    ),{
+      position: "bottom-right",
+      
+    });
+  };
   const startEditing = (type) => {
     setEditingType(type);
     setValue("name", type.name);
@@ -55,7 +63,9 @@ const Type = () => {
   };
 
   return (
-    <div className="flex flex-col p-10">
+    <div className="flex flex-col p-10 relative overflow-y-scroll">
+      <Toaster  />
+
       <div className="rounded-3xl flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold mb-3">
           {editingType ? "Edit Type" : "Lista de Tipos de media"}
@@ -85,7 +95,7 @@ const Type = () => {
         </form>
       </div>
 
-      <table className="w-full border-collapse mt-5">
+      <table className="w-full border-collapse mt-5 select-none">
         <thead>
           <tr>
             <th>Name</th>
@@ -105,7 +115,7 @@ const Type = () => {
                   className="text-blue-500 "
                 ></FaEdit>
                 <FaTrashCan
-                  onClick={() => typeDeleteById(type._id)}
+                  onClick={() => handleDelete(type._id)}
                   className="w-4 h-4 text-red-500"
                 />
               </td>
