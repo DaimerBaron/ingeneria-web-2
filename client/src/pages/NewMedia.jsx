@@ -55,11 +55,11 @@ const NewMedia = () => {
 
   return (
     <div className="flex flex-1 justify-center text-slate-200">
-      <div className="bg-primary-light  p-4 flex flex-col items-center m-auto rounded-lg px-8">
+      <div className="bg-primary-light  p-4 flex flex-col items-center m-auto rounded-lg ">
         <h1 className="font-bold text-2xl mb-5">Create Media</h1>
         <form onSubmit={onsubmit} className="flex flex-col  gap-2">
           <div className="container flex  gap-4">
-            <div id="inputs-basic" className="flex flex-col gap-2">
+            <div id="inputs-basic" className="flex flex-col gap-2 w-80">
               <label className="flex gap-1">
                 <span className="w-28">Title:</span>
                 <input
@@ -103,10 +103,10 @@ const NewMedia = () => {
               </label>
             </div>
 
-            <div id=" inputs-wiht-objectID" className="flex flex-col gap-2">
+            <div id=" inputs-wiht-objectID" className="flex flex-col gap-2 w-72">
               <label className="flex gap-1 items-center">
                 <span className="w-28">Genre:</span>
-                <select
+                <select 
                   required
                   className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
                   {...register("Genre", { required: true })}
