@@ -1,99 +1,182 @@
 import { useForm } from "react-hook-form";
 import { mediaRequest } from "../api/media";
-import { genreList } from "../api/genre";
+
 import { useEffect, useState } from "react";
-import genre from "../../../models/genre";
+
+//import data from modules
+import { genreList } from "../api/genre";
+import { producerList } from "../api/producer";
+import { directorList } from "../api/director";
+import { typeList } from "../api/type";
+
+import { Toaster, toast } from "sonner";
 
 const NewMedia = () => {
   const { register, handleSubmit, reset } = useForm();
-  const [genres, setGenres] = useState([]);
+  const [list, setlist] = useState({
+    genre: [],
+    producer: [],
+    director: [],
+    type: [],
+  });
 
   useEffect(() => {
-    const fetchGenres = async () => {
-      const res = await genreList();
-      setGenres(res.data);
-      console.log(res.data);
+    const fetchData = async () => {
+      const [genre, producer, director, type] = await Promise.all([
+        genreList(),
+        producerList(),
+        directorList(),
+        typeList(),
+      ]);
+
+      setlist({
+        genre: genre.data,
+        producer: producer.data,
+        director: director.data,
+        type: type.data,
+      });
     };
-    fetchGenres();
+    fetchData();
   }, []);
 
   const onsubmit = handleSubmit(async (data) => {
-    console.log(data);
-
-    const res = await mediaRequest(data);
-    console.log(res.data);
+    try {
+      toast.promise(mediaRequest(data), {
+        loading: "Creating media...",
+        success: () => {
+          reset();
+          return "Media created";
+        },
+      });
+    } catch (error) {
+      toast.error("Failed to create media. Please try again");
+    }
   });
 
   return (
-    <div className="flex justify-center h-screen bg-green-950 text-slate-200">
-      <div className="bg-green-900  p-4 flex flex-col items-center m-auto rounded-lg px-8">
-        <h1 className="font-bold text-2xl mb-3">Create Media</h1>
+    <div className="flex flex-1 justify-center text-slate-200">
+      <div className="bg-primary-light  p-4 flex flex-col items-center m-auto rounded-lg px-8">
+        <h1 className="font-bold text-2xl mb-5">Create Media</h1>
         <form onSubmit={onsubmit} className="flex flex-col  gap-2">
-          <label className="flex gap-1">
-            <span className="w-32">Title:</span>
-            <input
-              className="w-full pl-2 outline-none rounded-md  bg-green-950  py-1"
-              type="text"
-              name="title"
-              {...register("title", { required: true })}
-            />
-          </label>
-          <label className="flex gap-1 items-center">
-            <span className="w-32">Synopsis:</span>
-            <textarea
-              className="w-full py-4  bg-green-950 pl-2 outline-none rounded-md resize-none"
-              type="text"
-              name="synopsis"
-              {...register("synopsis", { required: true })}
-            />
-          </label>
-          {/* <label className="flex gap-1  ">
-            Photo:
-            <input accept="image/*" className="w-full  bg-green-950  py-1 pl-2 outline-none rounded-md " type="file" name="photo" />
-          </label>
-           */}
-          <label className="flex gap-1">
-            <span className="w-32">ReleaseYear:</span>
-            <input
-              className="w-full  bg-green-950  py-1 pl-2 outline-none rounded-md"
-              type="number"
-              name="releaseYear"
-              {...register("releaseYear", { required: true })}
-            />
-          </label>
-          <label className="flex gap-1 items-center">
-            <span className="w-32">Genre:</span>
-            <select
-              className="w-full  bg-green-950  py-1 pl-2 outline-none rounded-md"
-              {...register("Genre", { required: true })}
-            >
-              <option  value="">Select Genre</option>
-              {genres.map((genre) => (
-                <option key={genre._id} value={genre._id}>
-                  {genre.name}
-                </option>
-              ))}
+          <div className="container flex  gap-4">
+            <div id="inputs-basic" className="flex flex-col gap-2">
+              <label className="flex gap-1">
+                <span className="w-28">Title:</span>
+                <input
+                  required
+                  className="w-full pl-2 outline-none rounded-md  bg-primary-default  py-1"
+                  type="text"
+                  name="title"
+                  {...register("title", { required: true })}
+                />
+              </label>
+              <label className="flex gap-1 items-center">
+                <span className="w-28">Synopsis:</span>
+                <textarea
+                  required
+                  className="w-full py-4  bg-primary-default pl-2 outline-none rounded-md resize-none"
+                  type="text"
+                  name="synopsis"
+                  {...register("synopsis", { required: true })}
+                />
+              </label>
+              <label className="flex gap-1  ">
+                <span className="w-28">Photo:</span>
+                <input
+                  required
+                  className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
+                  type="text"
+                  name="photo"
+                  {...register("photo", { required: true })}
+                />
+              </label>
 
-            </select>
-          </label>
-          {/*<label className="flex gap-1">
-            Producer:
-            <input className="w-full  bg-green-950  py-1 pl-2 outline-none rounded-md" type="text" name="Producer"{...register('Producer',{required:true})} />
-          </label>
-          <label className="flex gap-1">
-            Director:
-            <input className="w-full  bg-green-950  py-1 pl-2 outline-none rounded-md" type="text" name="Director" {...register('Director',{required:true})} />
-          </label>
-          <label className="flex gap-1">
-            Type:
-            <input className="w-full  bg-green-950  py-1 pl-2 outline-none rounded-md" type="text" name="Type" {...register('Type',{required:true})} />
-          </label> */}
+              <label className="flex gap-1">
+                <span className="w-28">Year:</span>
+                <input
+                  required
+                  className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
+                  type="number"
+                  name="releaseYear"
+                  {...register("releaseYear", { required: true })}
+                />
+              </label>
+            </div>
+
+            <div id=" inputs-wiht-objectID" className="flex flex-col gap-2">
+              <label className="flex gap-1 items-center">
+                <span className="w-28">Genre:</span>
+                <select
+                  required
+                  className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
+                  {...register("Genre", { required: true })}
+                >
+                  <option value="">Select Genre</option>
+                  {list.genre.map((genre) => (
+                    <option key={genre._id} value={genre._id}>
+                      {genre.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="flex gap-1">
+                <span className="w-28">Producer:</span>
+
+                <select
+                  required
+                  className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
+                  {...register("Producer", { required: true })}
+                >
+                  <option value="">Select Producer</option>
+                  {list.producer.map((producer) => (
+                    <option key={producer._id} value={producer._id}>
+                      {producer.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="flex gap-1">
+                <span className="w-28">Director:</span>
+
+                <select
+                  required
+                  className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
+                  {...register("Director", { required: true })}
+                >
+                  <option value="">Select Director</option>
+                  {list.director.map((director) => (
+                    <option key={director._id} value={director._id}>
+                      {director.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="flex gap-1">
+                <span className="w-28">Type:</span>
+
+                <select
+                  required
+                  className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
+                  {...register("Type", { required: true })}
+                >
+                  <option value="">Select Type</option>
+                  {list.type.map((type) => (
+                    <option key={type._id} value={type._id}>
+                      {type.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          </div>
+
           <button
-            className="bg-black text-white py-2 px-4 rounded-md mt-2"
+            className="bg-black text-white m-auto w-28 py-2 px-4 rounded-md mt-2"
             type="submit"
           >
             Create
           </button>
+          <Toaster richColors />
         </form>
       </div>
     </div>

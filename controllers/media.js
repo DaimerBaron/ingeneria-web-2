@@ -17,8 +17,16 @@ class MediaController {
 
   async createMedia(req, res) {
     try {
+      const generateUrl = (title) => {
+        return title
+          .toLowerCase() 
+          .replace(/\s+/g, "-") 
+          .replace(/[^a-z0-9-]/g, ""); 
+      }
+
+      const url = generateUrl(req.body.title);
       const serial = crypto.randomUUID();
-      const newMedia = new Media({ ...req.body,serial });
+      const newMedia = new Media({ ...req.body,serial,url });
       await newMedia.save();
       res.status(200).json(newMedia);
     } catch (error) {
