@@ -76,7 +76,7 @@ const Genre = () => {
         </thead>
         <tbody>
           {genres.map((genre) => (
-            <tr className="border" key={genre._id}> //como ya defini estado. lo traigo con el id como clave
+            <tr className="border" key={genre._id}> 
               <td className="border pl-2">{genre.name}</td>
               <td className="border pl-2">{genre.description}</td>
               <td className="border pl-2 text-center w-20">{genre.state}</td>
