@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { directorRequest, directorList, directorDelete, directorUpdate } from "../api/director";
 import { useEffect, useState } from "react";
-import TrashIcon from "../assets/trash.svg?react";
-
+import { FaEdit } from "react-icons/fa";
+import { FaTrashCan } from "react-icons/fa6";
 const Director = () => {
   const [directors, setDirectors] = useState([]);
   const [editingDirector, setEditingDirector] = useState(null); // Estado para edición
@@ -47,7 +47,7 @@ const Director = () => {
           {editingDirector ? "Edit Director" : "Lista de Directores"}
         </h1>
         <form
-          className="bg-zinc-300 flex gap-2 justify-center items-center m-auto py-2 px-4 w-full rounded-md"
+          className="bg-zinc-300 flex gap-2 justify-center items-center m-auto py-2 px-4 w-full rounded-md text-black"
           onSubmit={onSubmit}
         >
           <input
@@ -83,10 +83,14 @@ const Director = () => {
             <tr className="border" key={director._id}>
               <td className="border pl-2">{director.name}</td>
               <td className="border pl-2 text-center w-20">{director.state}</td>
-              <td className="border pl-2 text-center cursor-pointer flex justify-center gap-2">
-                <button onClick={() => startEditing(director)} className="text-blue-500">Edit</button>
-                <TrashIcon
-                  onClick={() => directorDeleteById(director._id)}
+              
+              <td className="text-center cursor-pointer  gap-1 flex justify-around items-center px-3 py-3 ">
+                <FaEdit
+                  onClick={() => startEditing(director)}
+                  className="text-blue-500 "
+                ></FaEdit>
+                <FaTrashCan
+                    onClick={() => directorDeleteById(director._id)}
                   className="w-4 h-4 text-red-500"
                 />
               </td>

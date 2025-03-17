@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import { typeRequest, typeList, typeDelete, typeUpdate } from "../api/type";
 import { useEffect, useState } from "react";
-import TrashIcon from "../assets/trash.svg?react";
+import { FaEdit } from "react-icons/fa";
+import { FaTrashCan } from "react-icons/fa6";
 
 const Type = () => {
   const [types, setTypes] = useState([]);
@@ -29,20 +30,23 @@ const Type = () => {
     reset();
   });
 
-
   const typeDeleteById = async (id) => {
     try {
-      const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este tipo?");
+      const confirmDelete = window.confirm(
+        "¿Estás seguro de que deseas eliminar este tipo?"
+      );
       if (!confirmDelete) return; // Si el usuario cancela, no hace nada
-  
+
       await typeDelete(id);
       setTypes(types.filter((type) => type._id !== id)); // Elimina del estado sin recargar
     } catch (error) {
-      console.error("Error eliminando el tipo:", error.response?.data || error.message);
+      console.error(
+        "Error eliminando el tipo:",
+        error.response?.data || error.message
+      );
       alert("No se pudo eliminar el tipo.");
     }
   };
-  
 
   const startEditing = (type) => {
     setEditingType(type);
@@ -57,7 +61,7 @@ const Type = () => {
           {editingType ? "Edit Type" : "Lista de Tipos de media"}
         </h1>
         <form
-          className="bg-zinc-300 flex gap-2 justify-center items-center m-auto py-2 px-4 w-full rounded-md"
+          className="bg-zinc-300 flex gap-2 justify-center items-center m-auto py-2 px-4 w-full rounded-md text-black"
           onSubmit={onSubmit}
         >
           <input
@@ -72,7 +76,10 @@ const Type = () => {
             placeholder="Description"
             {...register("description", { required: true })}
           />
-          <button type="submit" className="bg-black text-white py-1 px-4 rounded-md">
+          <button
+            type="submit"
+            className="bg-black text-white py-1 px-4 rounded-md"
+          >
             {editingType ? "Update" : "Add"}
           </button>
         </form>
@@ -83,16 +90,21 @@ const Type = () => {
           <tr>
             <th>Name</th>
             <th>Description</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {types.map((type) => (
-            <tr className="border" key={type._id}>
-              <td className="border pl-2">{type.name}</td>
-              <td className="border pl-2 text-center">{type.description}</td>
-              <td className="border pl-2 text-center cursor-pointer flex justify-center gap-2">
-                <button onClick={() => startEditing(type)} className="text-blue-500">Edit</button>
-                <TrashIcon
+            <tr className="border  " key={type._id}>
+              <td className="border px-3 py-3">{type.name}</td>
+              <td className="border px-3 ">{type.description}</td>
+
+              <td className="text-center cursor-pointer  gap-1 flex justify-around items-center px-3 py-3 ">
+                <FaEdit
+                  onClick={() => startEditing(type)}
+                  className="text-blue-500 "
+                ></FaEdit>
+                <FaTrashCan
                   onClick={() => typeDeleteById(type._id)}
                   className="w-4 h-4 text-red-500"
                 />
