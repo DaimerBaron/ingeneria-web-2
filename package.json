@@ -16,6 +16,8 @@
     "express-validator": "^7.2.1",
     "mongodb": "^6.14.1",
     "mongoose": "^8.10.1",
-    "pag_pelicula": "file:"
+    "pag_pelicula": "file:",
+    "react": "^19.0.0",
+    "vite": "^6.2.2"
   }
 }

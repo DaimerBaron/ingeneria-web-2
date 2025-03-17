@@ -20,5 +20,6 @@ const validateProducer = [
 router.get("/", producerController.getAllProducers);
 router.post("/", validateProducer, producerController.createProducer);
 router.put("/:id", validateProducer, producerController.updateProducer);
+router.delete("/:id",producerController.deleteProducer); 
 
 export default router;
