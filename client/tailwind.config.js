@@ -3,15 +3,23 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily:{
+        'lexend': ['Lexend', 'sans-serif'],
+      },
       height: {
         "custom": "20rem",
       },
       colors: {
-        //Fondos
+        //bFondos
         primary: {
-          default: "rgb(7 38 20)",
-          light: " rgb(20 83 45)",
+          default: "#090f27",
+          light: "#0765cb",
           dark: "rgb(0 0 0)",
+        },
+        secundary: {
+          default: "#427be6",
+          light: "#427be6",
+          
         },
         colorButton: {
           default: "rgb(0 0 0)",

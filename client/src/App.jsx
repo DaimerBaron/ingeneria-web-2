@@ -10,7 +10,7 @@ import Medialayout from "./pages/MediaLayout";
 const App = () => {
   return (
     <BrowserRouter>
-      <div className="h-screen flex flex-col bg-primary-default text-colortext-default">
+      <div className="h-screen flex flex-col bg-primary-default text-colortext-default font-lexend">
         <Navbar />
         <Routes>
           <Route path="/" element={<Medialayout />} />
