@@ -15,7 +15,7 @@ const MediaLayout = () => {
 
   return (
     <div className="flex flex-1 flex-col  items-center bg-primary-default select-none overflow-y-scroll px-5 ">
-      <div className="relative my-4 flex items-center w-full justify-center ">
+      <div className="relative my-10 flex items-center w-full justify-center ">
         <div className="h-1 w-full bg-white rounded-xl opacity-10 m-auto translate-y-1/2"></div>
         <h1 className=" text-center   px-2 text-2xl font-bold text-white">
           Peliculas
