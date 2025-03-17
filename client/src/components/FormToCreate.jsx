@@ -23,7 +23,7 @@ const FormToCreate = ({ sendData, formInputs,isEditing }) => {
 
   return (
     <form
-      className="bg-zinc-300 flex gap-2 justify-center items-center m-auto py-2 px-4 w-full rounded-md text-black"
+      className=" flex gap-2 justify-center items-center m-auto py-2 px-4 w-full rounded-md border border-secundary-default/20"
       onSubmit={onSubmit}
     >
       {formInputs.map((input) => {
@@ -31,20 +31,20 @@ const FormToCreate = ({ sendData, formInputs,isEditing }) => {
           return (
             <select
               key={input.name}
-              className="w-full p-1 rounded-md outline-none max-w-24"
+              className="w-full p-1 bg-transparent rounded-md outline-none max-w-24"
               {...register(input.name)}
             >
-              <option defaultValue="Active" value="Active">
+              <option className="text-black" defaultValue="Active" value="Active">
                 Active
               </option>
-              <option value="Inactive">Inactive</option>
+              <option className="text-black" value="Inactive">Inactive</option>
             </select>
           );
         } else {
           return (
             <input
               key={input.name}
-              className={`outline-none rounded-md p-1 flex-1 ${
+              className={`outline-none bg-secundary-default/10 pl-2 rounded-md p-1 flex-1 ${
                 input.name === "description" ? "flex-[2]":''
               }`}
               type="text"
@@ -57,7 +57,7 @@ const FormToCreate = ({ sendData, formInputs,isEditing }) => {
       <button
         onClick={handleSubmit}
         type="submit"
-        className="bg-black text-white py-1 px-4 rounded-md"
+        className="bg-secundary-default text-white py-1 px-6 rounded-md"
       >
         {isEditing ? "Update" : "Add"}
       </button>
