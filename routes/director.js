@@ -19,6 +19,6 @@ const validateDirector = [
 router.get("/", directorController.getAllDirectors);
 router.post("/", validateDirector, directorController.createDirector);
 router.put("/:id", validateDirector, directorController.updateDirector);
-router.get("/", directorController.getAllDirectors);
+router.delete("/:id", directorController.deleteDirector); 
 
 export default router;

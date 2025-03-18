@@ -36,6 +36,17 @@ class directorController {
       res.status(500).json({ message: error.message });
     }
   }
+  async deleteDirector(req, res) {  
+    const { id } = req.params;
+    try {
+      const deletedDirector = await Director.findByIdAndDelete(id);
+      if (!deletedDirector)
+        return res.status(404).json({ message: "Director not found" });
+      res.status(200).json({ message: "Director deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
 }
 
 export default new directorController();
