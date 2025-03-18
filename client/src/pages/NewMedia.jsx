@@ -54,48 +54,48 @@ const NewMedia = () => {
   });
 
   return (
-    <div className="flex flex-1 justify-center text-slate-200">
-      <div className="bg-primary-light  p-4 flex flex-col items-center m-auto rounded-lg ">
+    <div className="flex flex-1 justify-center text-black">
+      <div className="bg-primary-light  p-6 py-10 flex flex-col items-center m-auto rounded-lg w-1/2   ">
         <h1 className="font-bold text-2xl mb-5">Create Media</h1>
-        <form onSubmit={onsubmit} className="flex flex-col  gap-2">
-          <div className="container flex  gap-4">
-            <div id="inputs-basic" className="flex flex-col gap-2 w-80">
-              <label className="flex gap-1">
+        <form onSubmit={onsubmit} className="flex flex-col w-full gap-2 ">
+          <div className="container flex w-full  gap-4">
+            <div id="inputs-basic" className="flex flex-col gap-4 w-full ">
+              <label className="flex gap-1 text-lg">
                 <span className="w-28">Title:</span>
                 <input
                   required
-                  className="w-full pl-2 outline-none rounded-md  bg-primary-default  py-1"
+                  className="w-full pl-2 outline-none text-gray-200 font-light rounded-md  bg-primary-default  py-1"
                   type="text"
                   name="title"
                   {...register("title", { required: true })}
                 />
               </label>
-              <label className="flex gap-1 items-center">
+              <label className="flex gap-1 text-lg items-center">
                 <span className="w-28">Synopsis:</span>
                 <textarea
                   required
-                  className="w-full py-4  bg-primary-default pl-2 outline-none rounded-md resize-none"
+                  className="w-full py-4  bg-primary-default pl-2 outline-none text-gray-200 font-light rounded-md resize-none"
                   type="text"
                   name="synopsis"
                   {...register("synopsis", { required: true })}
                 />
               </label>
-              <label className="flex gap-1  ">
+              <label className="flex gap-1 text-lg  ">
                 <span className="w-28">Photo:</span>
                 <input
                   required
-                  className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
+                  className="w-full  bg-primary-default  py-1 pl-2 outline-none text-gray-200 font-light rounded-md"
                   type="text"
                   name="photo"
                   {...register("photo", { required: true })}
                 />
               </label>
 
-              <label className="flex gap-1">
+              <label className="flex gap-1 text-lg">
                 <span className="w-28">Year:</span>
                 <input
                   required
-                  className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
+                  className="w-full  bg-primary-default  py-1 pl-2 outline-none text-gray-200 font-light rounded-md"
                   type="number"
                   name="releaseYear"
                   {...register("releaseYear", { required: true })}
@@ -103,12 +103,12 @@ const NewMedia = () => {
               </label>
             </div>
 
-            <div id=" inputs-wiht-objectID" className="flex flex-col gap-2 w-72">
-              <label className="flex gap-1 items-center">
+            <div id=" inputs-wiht-objectID" className="flex flex-col gap-4 w-full ">
+              <label className="flex gap-1 text-lg items-center">
                 <span className="w-28">Genre:</span>
                 <select 
                   required
-                  className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
+                  className="w-full  bg-primary-default  py-1 pl-2 outline-none text-gray-200 font-light rounded-md"
                   {...register("Genre", { required: true })}
                 >
                   <option value="">Select Genre</option>
@@ -119,12 +119,12 @@ const NewMedia = () => {
                   ))}
                 </select>
               </label>
-              <label className="flex gap-1">
+              <label className="flex gap-1 text-lg">
                 <span className="w-28">Producer:</span>
 
                 <select
                   required
-                  className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
+                  className="w-full  bg-primary-default  py-1 pl-2 outline-none text-gray-200 font-light rounded-md"
                   {...register("Producer", { required: true })}
                 >
                   <option value="">Select Producer</option>
@@ -135,12 +135,12 @@ const NewMedia = () => {
                   ))}
                 </select>
               </label>
-              <label className="flex gap-1">
+              <label className="flex gap-1 text-lg">
                 <span className="w-28">Director:</span>
 
                 <select
                   required
-                  className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
+                  className="w-full  bg-primary-default  py-1 pl-2 outline-none text-gray-200 font-light rounded-md"
                   {...register("Director", { required: true })}
                 >
                   <option value="">Select Director</option>
@@ -151,12 +151,12 @@ const NewMedia = () => {
                   ))}
                 </select>
               </label>
-              <label className="flex gap-1">
+              <label className="flex gap-1 text-lg">
                 <span className="w-28">Type:</span>
 
                 <select
                   required
-                  className="w-full  bg-primary-default  py-1 pl-2 outline-none rounded-md"
+                  className="w-full  bg-primary-default  py-1 pl-2 outline-none text-gray-200 font-light rounded-md"
                   {...register("Type", { required: true })}
                 >
                   <option value="">Select Type</option>
@@ -171,7 +171,7 @@ const NewMedia = () => {
           </div>
 
           <button
-            className="bg-black text-white m-auto w-28 py-2 px-4 rounded-md mt-2"
+            className="bg-black text-gray-200 font-light m-auto w-28 py-2 px-4 rounded-md mt-2"
             type="submit"
           >
             Create

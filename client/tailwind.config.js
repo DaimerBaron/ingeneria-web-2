@@ -29,7 +29,7 @@ export default {
         //color texto
         colortext: {
           default: "rgb(255 255 255)",
-          light: "rgb(0 0 0)",
+          light: "#969696",
         },
 
       },
