@@ -5,6 +5,7 @@ import HoverMedia from "../components/HoverMedia";
 const MediaLayout = () => {
   const [medias, setMedias] = useState([]);
   const [isHover, setIsHover] = useState(null);
+  const [translateX, setTranslateX] = useState(0);
   
 
   const getMedias = async () => {
@@ -14,6 +15,12 @@ const MediaLayout = () => {
   useEffect(() => {
     getMedias();
   }, []);
+
+  const handleHover = (e, id) => {
+    setIsHover(id);
+    setTranslateX(e.clientX);
+    
+  }
 
   return (
     <div className="flex flex-1 flex-col  items-center bg-primary-default select-none overflow-y-auto px-5 ">
@@ -29,14 +36,14 @@ const MediaLayout = () => {
         {medias.map((media) => {
           return (
             <div
-              className=" transition-transform duration-300 h-70 pb-1  bg-primary-dark bg-opacity-10 gap-2 rounded-lg overflow-visible relative"
+              className=" transition-transform duration-300 h-70 pb-1   bg-primary-dark bg-opacity-10 gap-2 rounded-lg overflow-visible relative"
               key={media._id}
             >
-              {isHover===media._id && <HoverMedia media={media} />}
+              {isHover===media._id && <HoverMedia translateX={translateX} media={media} />}
               <div onMouseLeave={() => setIsHover(null)
-              } onMouseEnter={() => setIsHover(media._id)} className="h-70 overflow-hidden">
+              } onMouseEnter={(e) => handleHover(e,media._id)} className="h-70 w-40 overflow-hidden">
               <img
-                className="hover:scale-110 transition-transform duration-200 hover:object-fit object-cover h-60   rounded-lg  "
+                className="hover:scale-110 transition-transform duration-200  object-contain h-60   rounded-lg  "
                 src={media.photo}
                 alt="imagen"
               />
