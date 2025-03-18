@@ -19,14 +19,13 @@ class directorController {
       res.status(500).json({ message: error.message });
     }
   }
+  
   async updateDirector(req, res) {
     const { id } = req.params;
-    const director = req.body;
-    const { name, state } = director;
     try {
       const updatedDirector = await Director.findByIdAndUpdate(
         id,
-        { name, state, dateUpdated: Date().now },
+        { name: req.body.name, state: req.body.state, dateUpdated: new Date() },
         { new: true }
       );
       if (!updatedDirector)
