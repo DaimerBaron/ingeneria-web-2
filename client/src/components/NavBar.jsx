@@ -6,8 +6,8 @@ const Navbar = () => {
 
   return (
     <nav className="border-blue-100/10 border-b p-4 w-full text-white select-none text-xl font-normal flex gap-4">
-      <div className="absolute top-2" id="logo">
-        <Link to="/" className="text-2xl font-bold">
+      <div className="absolute top-2 select-none" id="logo">
+        <Link to="/media" className="text-2xl font-bold">
           <PiFilmReel className="text-secundary-light inline-block w-12 h-12 text-secu ndary-light" />
           <span>
             Film<span className="text-secundary-light font-extrabold">Play</span>
@@ -16,7 +16,7 @@ const Navbar = () => {
       </div>
       <ul className="flex space-x-4 ml-44">
         {[
-          { path: "/", label: "Media" },
+          { path: "/media", label: "Media" },
           { path: "/createMedia", label: "Create Media" },
           { path: "/director", label: "Director" },
           { path: "/genre", label: "Genre" },

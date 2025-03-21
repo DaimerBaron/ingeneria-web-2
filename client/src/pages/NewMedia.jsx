@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { mediaRequest } from "../api/media";
+import { useParams } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 
@@ -8,19 +9,38 @@ import { genreList } from "../api/genre";
 import { producerList } from "../api/producer";
 import { directorList } from "../api/director";
 import { typeList } from "../api/type";
+import { mediaList, updatedMedia } from "../api/media";
 
 import { Toaster, toast } from "sonner";
 
 const NewMedia = () => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, setValue } = useForm();
   const [list, setlist] = useState({
     genre: [],
     producer: [],
     director: [],
     type: [],
   });
+  const { id } = useParams();
 
   useEffect(() => {
+    if (id) {
+      const fetchData = async () => {
+        const media = await mediaList();
+        const mediaData = media.data.find((media) => media._id === id);
+        setValue("title", mediaData.title);
+        setValue("synopsis", mediaData.synopsis);
+        setValue("photo", mediaData.photo);
+        setValue("releaseYear", mediaData.releaseYear);
+        setValue("Genre", mediaData.Genre?._id); 
+        setValue("Producer", mediaData.Producer?._id);
+        setValue("Director", mediaData.Director?._id);
+        setValue("Type", mediaData.Type?._id);
+      };
+
+      fetchData();
+    }
+
     const fetchData = async () => {
       const [genre, producer, director, type] = await Promise.all([
         genreList(),
@@ -37,26 +57,34 @@ const NewMedia = () => {
       });
     };
     fetchData();
-  }, []);
+  }, [id, setValue]);
 
   const onsubmit = handleSubmit(async (data) => {
     try {
-      toast.promise(mediaRequest(data), {
-        loading: "Creating media...",
-        success: () => {
-          reset();
-          return "Media created";
-        },
-      });
+      if (id) {
+        await updatedMedia(id, data);
+        toast.success("Media updated successfully");
+        reset()
+      } else {
+        toast.promise(mediaRequest(data), {
+          loading: "Creating media...",
+          success: () => {
+            reset();
+            return "Media created";
+          },
+        });
+      }
     } catch (error) {
       toast.error("Failed to create media. Please try again");
     }
   });
 
   return (
-    <div className="flex flex-1 justify-center text-black">
-      <div className="bg-primary-light  p-6 py-10 flex flex-col items-center m-auto rounded-lg w-1/2   ">
-        <h1 className="font-bold text-2xl mb-5">Create Media</h1>
+    <div className="flex flex-1 justify-center text-black select-none">
+      <div className="bg-primary-light/90  p-6 py-10 flex flex-col items-center m-auto rounded-lg w-1/2   ">
+        <h1 className="font-bold text-2xl mb-5">
+          {id ? "Edit Media" : "Create Media"}
+        </h1>
         <form onSubmit={onsubmit} className="flex flex-col w-full gap-2 ">
           <div className="container flex w-full  gap-4">
             <div id="inputs-basic" className="flex flex-col gap-4 w-full ">
@@ -103,10 +131,13 @@ const NewMedia = () => {
               </label>
             </div>
 
-            <div id=" inputs-wiht-objectID" className="flex flex-col gap-4 w-full ">
+            <div
+              id=" inputs-wiht-objectID"
+              className="flex flex-col gap-4 w-full "
+            >
               <label className="flex gap-1 text-lg items-center">
                 <span className="w-28">Genre:</span>
-                <select 
+                <select
                   required
                   className="w-full  bg-primary-default  py-1 pl-2 outline-none text-gray-200 font-light rounded-md"
                   {...register("Genre", { required: true })}

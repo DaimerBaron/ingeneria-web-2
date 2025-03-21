@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { mediaList } from "../api/media";
 import HoverMedia from "../components/HoverMedia";
+import {useNavigate} from "react-router-dom"
 
 const MediaLayout = () => {
   const [medias, setMedias] = useState([]);
   const [isHover, setIsHover] = useState(null);
   const [translateX, setTranslateX] = useState(0);
   
-
+  const navigate = useNavigate()
   const getMedias = async () => {
     const res = await mediaList();
     setMedias(res.data);
@@ -49,7 +50,7 @@ const MediaLayout = () => {
               />
               </div>
               <div className="pl-2">
-                <h2 className="mt-2 truncate max-w-36 hover:text-secundary-light">{media.title}</h2>
+                <h2 onClick={() =>  navigate(`/media/${media._id}`)} className="mt-2 truncate max-w-36 hover:text-secundary-light">{media.title}</h2>
                 <h3 className="opacity-55 ">{media.releaseYear}</h3>
               </div>
             </div>

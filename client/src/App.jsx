@@ -6,6 +6,7 @@ import Producer from "./pages/Producer";
 import Type from "./pages/Type";
 import Navbar from "./components/NavBar";
 import Medialayout from "./pages/MediaLayout";
+import { MediaDetails } from "./components/MediaDetails";
 
 const App = () => {
   return (
@@ -13,7 +14,9 @@ const App = () => {
       <div className="h-screen flex flex-col bg-primary-default text-colortext-default font-lexend">
         <Navbar />
         <Routes>
-          <Route path="/" element={<Medialayout />} />
+          <Route path="/media" element={<Medialayout />} />
+          <Route path="/media/:id" element= {<MediaDetails/>}/>
+          <Route path="/editMedia/:id" element= {<NewMedia/>}/>
           <Route path="/createMedia" element={<NewMedia />} />
           <Route path="/director" element={<Director></Director>} />
           <Route path="/genre" element={<Genre></Genre>} />
