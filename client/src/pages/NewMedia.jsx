@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { mediaRequest } from "../api/media";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 
@@ -22,6 +22,7 @@ const NewMedia = () => {
     type: [],
   });
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
@@ -65,6 +66,7 @@ const NewMedia = () => {
         await updatedMedia(id, data);
         toast.success("Media updated successfully");
         reset()
+        navigate("/media");
       } else {
         toast.promise(mediaRequest(data), {
           loading: "Creating media...",

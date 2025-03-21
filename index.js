@@ -6,11 +6,13 @@ import typeRoutes from './routes/type.js';
 import getConnetion from './db/connect-mongo.js';
 import directorRoutes from './routes/director.js';
 import producerRoutes from './routes/producer.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 
 const app = express();
-const port = 5100;
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
