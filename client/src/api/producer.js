@@ -1,7 +1,7 @@
 
 import axios from "axios"; // peticiones al igual que fetch
 
-const API = "http://localhost:5100/";
+const API = import.meta.env.VITE_API_URL;
 
 export const producerRequest = async (producer) => await axios.post(`${API}producer`, producer);
 export const producerList = async () => await axios.get(`${API}producer`);

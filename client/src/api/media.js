@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5100/",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 export const mediaRequest = async (media) => await axiosInstance.post("media", media);
