@@ -23,7 +23,7 @@ app.use('/genre',authRequired,genreRoutes)
 app.use('/type',authRequired,typeRoutes)
 app.use('/director',authRequired,directorRoutes)
 app.use('/producer',authRequired,producerRoutes)
-app.use('/user',authRequired,userRoutes)
+app.use('/user',userRoutes)
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

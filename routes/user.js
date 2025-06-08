@@ -4,7 +4,7 @@ import { requireRole } from "../middleware/role.js";
 
 const router = Router();
 
-router.post("/",requireRole, userController.createUser);
+router.post("/", requireRole, userController.createUser);
 router.post("/login", userController.login);
 
 export default router;
