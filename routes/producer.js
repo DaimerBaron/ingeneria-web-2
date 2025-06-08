@@ -1,6 +1,7 @@
 import express from "express";
 import { check, validationResult } from "express-validator";
 import producerController from "../controllers/producer.js";
+import { requireRole } from "../middleware/role.js";
 
 const router = express.Router();
 const validateProducer = [
@@ -18,7 +19,7 @@ const validateProducer = [
 ];
 
 router.get("/", producerController.getAllProducers);
-router.post("/", validateProducer, producerController.createProducer);
+router.post("/",requireRole, validateProducer, producerController.createProducer);
 router.put("/:id", validateProducer, producerController.updateProducer);
 router.delete("/:id",producerController.deleteProducer); 
 

@@ -2,6 +2,7 @@ import TypeController from "../controllers/type.js"; // <-- Primera letra en may
 
 import express from "express";
 import { validationResult, check } from "express-validator";
+import { requireRole } from "../middleware/role.js";
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ const validateType = [
 ];
 
 router.get("/", TypeController.getAllTypes);
-router.post("/", validateType, TypeController.createType);
+router.post("/", requireRole , validateType, TypeController.createType);
 router.put("/:id", validateType, TypeController.updateType);
 router.delete("/:id", TypeController.deleteType);
 

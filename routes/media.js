@@ -1,7 +1,7 @@
 import express from "express";
 import MediaController from "../controllers/media.js";
 import { validationResult, check } from "express-validator";
-
+import { requireRole } from "../middleware/role.js";
 const router = express.Router();
 
 // crear validaciones segun el modulo media.
@@ -27,7 +27,7 @@ const validateMedia = [
 ];
 
 router.get("/", MediaController.getMedia);
-router.post("/", validateMedia, MediaController.createMedia);
+router.post("/", requireRole("administrador"), validateMedia, MediaController.createMedia);
 router.put("/:id", validateMedia, MediaController.updateMedia);
 router.delete("/:id", MediaController.deleteMedia);
 

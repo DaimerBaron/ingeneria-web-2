@@ -1,6 +1,7 @@
 import genreController from "../controllers/genre.js";
 import express from "express";
 import { validationResult, check } from "express-validator";
+import { requireRole } from "../middleware/role.js";
 
 const validateGenre = [
   check("name", "invalid.name").not().isEmpty(),
@@ -17,7 +18,7 @@ const validateGenre = [
 
 const router = express.Router();
 router.get("/", genreController.getAllGenres);
-router.post("/", validateGenre, genreController.createGenre);
+router.post("/",requireRole, validateGenre, genreController.createGenre);
 router.put("/:id", validateGenre, genreController.updateGenre);
 router.delete("/:id", genreController.deleteGenre);
 
